@@ -22,13 +22,14 @@ model User {
 }
 
 model Dish {
-  id          String       @id @default(uuid())
+  id          String        @id @default(uuid())
   title       String
   description String
   category    String
   price       String
   image       String
   ingredients Ingredient[]
+  order_items Order_Items[]
 
   @@map("dishes")
 }
@@ -43,13 +44,28 @@ model Ingredient {
 }
 
 model Order {
-  id             String @id @default(uuid())
+  id             String        @id @default(uuid())
   user_id        String
   status         String
   total_price    String
   payment_method String
-  createdAt      String
-  user           User   @relation(fields: [user_id], references: [id])
+  createdAt      DateTime      @default(now())
+  user           User          @relation(fields: [user_id], references: [id])
+  order_items    Order_Items[]
 
   @@map("orders")
+}
+
+model Order_Items {
+  id        String   @id @default(uuid())
+  order_id  String
+  dish_id   String
+  title     String
+  quantity  String
+  createdAt DateTime @default(now())
+
+  dish  Dish  @relation(fields: [dish_id], references: [id])
+  order Order @relation(fields: [order_id], references: [id])
+
+  @@map("orders_items")
 }

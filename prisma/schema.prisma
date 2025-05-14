@@ -8,27 +8,26 @@ datasource db {
 }
 
 model User {
-  id       String  @id @default(uuid())
-  name     String
-  email    String  @unique
-  password String
-  avatar   String
-  isAdmin  Boolean @default(false)
-
+  id        String   @id @default(uuid())
+  name      String
+  email     String   @unique
+  password  String
+  avatar    String
+  isAdmin   Boolean  @default(false)
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now())
+  order     Order[]
 
   @@map("users")
 }
 
 model Dish {
-  id          String @id @default(uuid())
+  id          String       @id @default(uuid())
   title       String
   description String
   category    String
   price       String
   image       String
-
   ingredients Ingredient[]
 
   @@map("dishes")
@@ -37,9 +36,20 @@ model Dish {
 model Ingredient {
   id      String @id @default(uuid())
   name    String
-  dish_id String
-
-  dish Dish @relation(fields: [dish_id], references: [id])
+  dish_id String @default("CASCADE")
+  dish    Dish   @relation(fields: [dish_id], references: [id], onDelete: Cascade)
 
   @@map("ingredients")
+}
+
+model Order {
+  id             String @id @default(uuid())
+  user_id        String
+  status         String
+  total_price    String
+  payment_method String
+  createdAt      String
+  user           User   @relation(fields: [user_id], references: [id])
+
+  @@map("orders")
 }

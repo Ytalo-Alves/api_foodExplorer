@@ -29,5 +29,17 @@ model Dish {
   price       String
   image       String
 
+  ingredients Ingredient[]
+
   @@map("dishes")
+}
+
+model Ingredient {
+  id      String @id @default(uuid())
+  name    String
+  dish_id String
+
+  dish Dish @relation(fields: [dish_id], references: [id])
+
+  @@map("ingredients")
 }

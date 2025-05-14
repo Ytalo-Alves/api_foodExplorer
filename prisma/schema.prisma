@@ -20,3 +20,14 @@ model User {
 
   @@map("users")
 }
+
+model Dish {
+  id          String @id @default(uuid())
+  title       String
+  description String
+  category    String
+  price       String
+  image       String
+
+  @@map("dishes")
+}

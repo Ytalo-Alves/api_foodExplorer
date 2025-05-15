@@ -1,7 +1,7 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 import { z } from "zod";
-import { prisma } from "../lib/prisma";
-import { emailInAlreadyUse } from "../errors/email-in-already-use";
+import { prisma } from "../../lib/prisma";
+import { emailInAlreadyUse } from "../../errors/email-in-already-use";
 import { hash } from "bcryptjs";
 
 export class UserController {
@@ -34,6 +34,10 @@ export class UserController {
 
     return reply.status(201).send({message: 'Usuario criando com sucesso'})
 
+
+  }
+
+  async update(request: FastifyRequest, reply: FastifyReply) {
 
   }
 }

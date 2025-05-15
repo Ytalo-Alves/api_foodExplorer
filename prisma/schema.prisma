@@ -27,7 +27,7 @@ model Dish {
   description String
   category    String
   price       String
-  image       String
+  image       String?
   ingredients Ingredient[]
   order_items Order_Items[]
 

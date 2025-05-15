@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start:dev": "tsx watch src/server.ts"
   },
   "keywords": [],
   "author": "",
@@ -11,7 +11,10 @@
   "description": "",
   "dependencies": {
     "@prisma/client": "6.7.0",
-    "fastify": "5.3.3"
+    "bcryptjs": "3.0.2",
+    "dotenv": "16.5.0",
+    "fastify": "5.3.3",
+    "zod": "3.24.4"
   },
   "devDependencies": {
     "@types/node": "22.15.18",

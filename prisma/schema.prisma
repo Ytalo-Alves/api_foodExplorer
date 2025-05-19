@@ -17,6 +17,7 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now())
   order     Order[]
+  dish      Dish[]
 
   @@map("users")
 }
@@ -28,8 +29,11 @@ model Dish {
   category    String
   price       String
   image       String?
-  ingredients Ingredient[]
+  user_id     String
   order_items Order_Items[]
+  ingredients Ingredient[]
+
+  user User @relation(fields: [user_id], references: [id])
 
   @@map("dishes")
 }

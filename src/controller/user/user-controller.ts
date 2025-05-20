@@ -3,6 +3,10 @@ import { z } from "zod";
 import { prisma } from "../../lib/prisma";
 import { emailInAlreadyUse } from "../../errors/email-in-already-use";
 import { compare, hash } from "bcryptjs";
+import path from "path";
+import { randomUUID } from "crypto";
+import { pipeline } from "stream/promises";
+import fs from 'fs'
 
 export class UserController {
   async create(request: FastifyRequest, reply: FastifyReply) {
@@ -32,7 +36,7 @@ export class UserController {
       }
     })
 
-    return reply.status(201).send({message: 'Usuario criando com sucesso'})
+    return reply.status(201).send({...user, password: false})
 
 
   }
@@ -83,5 +87,31 @@ export class UserController {
     })
 
     return reply.status(200).send({ message: 'Usuário atualizado com sucesso.' })
+  }
+
+  async avatar(request: FastifyRequest, reply: FastifyReply) {
+    const userId = request.user.sub;
+
+    const data = await request.file();
+
+    if (!data) {
+      return reply.status(400).send({ error: "Nenhuma imagem enviada." });
+    }
+
+    const extension = path.extname(data.filename);
+    const fileName = `${randomUUID()}${extension}`;
+    const filePath = path.resolve(__dirname, "../../../", "uploads", fileName);
+
+    await pipeline(data.file, fs.createWriteStream(filePath));
+
+    // Aqui atualiza o avatar no banco
+    await prisma.user.update({
+      where: { id: userId },
+      data: {
+        avatar: fileName,
+      },
+    });
+
+    return reply.status(200).send({ message: "Avatar atualizado com sucesso!" });
   }
 } 

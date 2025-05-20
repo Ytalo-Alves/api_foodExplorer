@@ -1,5 +1,5 @@
 import { FastifyReply, FastifyRequest } from "fastify";
-import { string, z } from "zod";
+import { z } from "zod";
 import { prisma } from "../../lib/prisma";
 import { promisify } from "util";
 import { pipeline } from "stream";

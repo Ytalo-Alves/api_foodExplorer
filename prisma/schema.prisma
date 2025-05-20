@@ -51,7 +51,7 @@ model Order {
   id             String        @id @default(uuid())
   user_id        String
   status         String
-  total_price    String
+  total_price    Int
   payment_method String
   createdAt      DateTime      @default(now())
   user           User          @relation(fields: [user_id], references: [id])
@@ -65,7 +65,7 @@ model Order_Items {
   order_id  String
   dish_id   String
   title     String
-  quantity  String
+  quantity  Int
   createdAt DateTime @default(now())
 
   dish  Dish  @relation(fields: [dish_id], references: [id])

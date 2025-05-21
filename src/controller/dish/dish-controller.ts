@@ -202,7 +202,11 @@ if (ingredientsInsert && ingredientsInsert.length > 0) {
   async delete(request: FastifyRequest, reply: FastifyReply) {
     const id = request.params as {id:string}
 
-    await prisma.dish.delete({where: id})
+    const dishExists = await prisma.dish.delete({where: id})
+
+    if(!dishExists) {
+      return reply.status(404).send({message: 'Prato não encontrado'})
+    }
 
     reply.status(200).send({message: 'Prato deletado com sucesso!'})
   }

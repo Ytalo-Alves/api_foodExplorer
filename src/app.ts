@@ -6,7 +6,13 @@ import fastifyMultipart from "@fastify/multipart";
 import swagger from "@fastify/swagger";
 import swaggerUi from "@fastify/swagger-ui";
 
-export const app = Fastify()
+export const app = Fastify({
+  ajv: {
+    customOptions: {
+      strict: false
+    }
+  }
+})
 
 app.register(swagger, {
   swagger: {

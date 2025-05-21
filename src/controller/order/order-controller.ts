@@ -111,6 +111,6 @@ export class OrderController {
       data: { status },
     });
 
-    return reply.status(200).send(); // sem conteúdo
+    return reply.status(200).send()
   }
 }
